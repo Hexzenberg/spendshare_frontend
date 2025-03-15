@@ -22,27 +22,27 @@ const PredictForm = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError("");
-        setPrediction(null);
+    e.preventDefault();
+    setError("");
+    setPrediction(null);
 
-        try {
-            const response = await fetch("https://spendshare-api.onrender.com", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
-            });
+    try {
+        const response = await fetch("https://spendshare-api.onrender.com/predict", { 
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        });
 
-            const data = await response.json();
-            if (data.error) {
-                setError(data.error);
-            } else {
-                setPrediction(data.prediction);
-            }
-        } catch (err) {
-            setError("Failed to connect to the API.");
+        const data = await response.json();
+        if (data.error) {
+            setError(data.error);
+        } else {
+            setPrediction(data.prediction);
         }
-    };
+    } catch (err) {
+        setError("Failed to connect to the API.");
+    }
+};
 
     return (
         <section>
